@@ -5,7 +5,7 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
-## [0.1.0] - unreleased
+## [0.1.0] - 2026-11-05
 
 ### Added
 
@@ -16,3 +16,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - **widgets:** the asteroids of the week, the Earth seen from DSCOVR, and the natural events near a house
 - **configuration:** optional NASA API key, language of the texts, radius and period of the natural events, threshold of the close approaches, a "Test the connection" button and a "Diagnostic" button
 - **i18n:** English, French, German and Spanish for the manifest, the runtime texts, the documentation and the README
+
+[0.1.0]: https://github.com/William-De71/gladys-nasa/releases/tag/v0.1.0
