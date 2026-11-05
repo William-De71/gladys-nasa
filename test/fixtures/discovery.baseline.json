@@ -1,0 +1,430 @@
+{
+  "devices": {
+    "asteroids": {
+      "external_id": "ext:test-integration:asteroids:global",
+      "should_poll": false,
+      "features": [
+        {
+          "external_id": "ext:test-integration:asteroids:global:closest_distance",
+          "category": "distance-sensor",
+          "type": "decimal",
+          "unit": "km",
+          "min": 0,
+          "max": 200000000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:asteroids:global:closest_lunar",
+          "category": "unknown",
+          "type": "unknown",
+          "min": 0,
+          "max": 600,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:asteroids:global:approaches",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 10000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:asteroids:global:hazardous",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 10000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:asteroids:global:closest_name",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "events": {
+      "external_id": "ext:test-integration:natural-events:6f1c2d3e-0000-4000-8000-000000000001",
+      "should_poll": false,
+      "features": [
+        {
+          "external_id": "ext:test-integration:natural-events:6f1c2d3e-0000-4000-8000-000000000001:events_nearby",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 1000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:natural-events:6f1c2d3e-0000-4000-8000-000000000001:nearest_distance",
+          "category": "distance-sensor",
+          "type": "decimal",
+          "unit": "km",
+          "min": 0,
+          "max": 20040,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:natural-events:6f1c2d3e-0000-4000-8000-000000000001:nearest_event",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "api_key",
+        "type": "secret"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      },
+      {
+        "key": "events",
+        "type": "section"
+      },
+      {
+        "key": "radius_km",
+        "type": "select"
+      },
+      {
+        "key": "event_days",
+        "type": "select"
+      },
+      {
+        "key": "asteroids",
+        "type": "section"
+      },
+      {
+        "key": "lunar_threshold",
+        "type": "select"
+      }
+    ],
+    "actions": ["test_connection", "diagnostic"],
+    "action_fields": {
+      "test_connection": [],
+      "diagnostic": []
+    },
+    "widgets": [
+      {
+        "key": "asteroids",
+        "settings": ["sort"],
+        "options": {
+          "sort": ["distance", "date"]
+        }
+      },
+      {
+        "key": "earth",
+        "settings": ["device"],
+        "options": {}
+      },
+      {
+        "key": "natural_events",
+        "settings": ["device"],
+        "options": {}
+      }
+    ],
+    "scene_triggers": [
+      {
+        "key": "asteroid_close_approach",
+        "fields": [],
+        "variables": [
+          {
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "distance_km",
+            "type": "number"
+          },
+          {
+            "key": "distance_lunar",
+            "type": "number"
+          },
+          {
+            "key": "diameter_m",
+            "type": "string"
+          },
+          {
+            "key": "velocity_kms",
+            "type": "number"
+          },
+          {
+            "key": "hazardous",
+            "type": "boolean"
+          },
+          {
+            "key": "sentry",
+            "type": "boolean"
+          },
+          {
+            "key": "url",
+            "type": "string"
+          },
+          {
+            "key": "message",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "hazardous_asteroid",
+        "fields": [],
+        "variables": [
+          {
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "distance_km",
+            "type": "number"
+          },
+          {
+            "key": "distance_lunar",
+            "type": "number"
+          },
+          {
+            "key": "diameter_m",
+            "type": "string"
+          },
+          {
+            "key": "velocity_kms",
+            "type": "number"
+          },
+          {
+            "key": "hazardous",
+            "type": "boolean"
+          },
+          {
+            "key": "sentry",
+            "type": "boolean"
+          },
+          {
+            "key": "url",
+            "type": "string"
+          },
+          {
+            "key": "message",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "natural_event_nearby",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          },
+          {
+            "key": "category",
+            "options": [
+              "drought",
+              "dustHaze",
+              "earthquakes",
+              "floods",
+              "landslides",
+              "manmade",
+              "seaLakeIce",
+              "severeStorms",
+              "snow",
+              "tempExtremes",
+              "volcanoes",
+              "waterColor",
+              "wildfires",
+              "other"
+            ]
+          }
+        ],
+        "variables": [
+          {
+            "key": "device",
+            "type": "string"
+          },
+          {
+            "key": "house",
+            "type": "string"
+          },
+          {
+            "key": "title",
+            "type": "string"
+          },
+          {
+            "key": "category",
+            "type": "string"
+          },
+          {
+            "key": "category_label",
+            "type": "string"
+          },
+          {
+            "key": "distance_km",
+            "type": "number"
+          },
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "magnitude",
+            "type": "number"
+          },
+          {
+            "key": "magnitude_unit",
+            "type": "string"
+          },
+          {
+            "key": "source",
+            "type": "string"
+          },
+          {
+            "key": "url",
+            "type": "string"
+          },
+          {
+            "key": "message",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "get_asteroids",
+        "fields": [],
+        "outputs": [
+          {
+            "key": "approaches",
+            "type": "number"
+          },
+          {
+            "key": "hazardous",
+            "type": "number"
+          },
+          {
+            "key": "closest_name",
+            "type": "string"
+          },
+          {
+            "key": "closest_date",
+            "type": "string"
+          },
+          {
+            "key": "closest_distance_km",
+            "type": "number"
+          },
+          {
+            "key": "closest_distance_lunar",
+            "type": "number"
+          },
+          {
+            "key": "closest_diameter_m",
+            "type": "string"
+          },
+          {
+            "key": "closest_velocity_kms",
+            "type": "number"
+          },
+          {
+            "key": "closest_hazardous",
+            "type": "boolean"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "get_natural_events",
+        "fields": ["device"],
+        "outputs": [
+          {
+            "key": "count",
+            "type": "number"
+          },
+          {
+            "key": "house",
+            "type": "string"
+          },
+          {
+            "key": "nearest_title",
+            "type": "string"
+          },
+          {
+            "key": "nearest_category",
+            "type": "string"
+          },
+          {
+            "key": "nearest_distance_km",
+            "type": "number"
+          },
+          {
+            "key": "nearest_date",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "get_earth_image",
+        "fields": ["device"],
+        "outputs": [
+          {
+            "key": "image_url",
+            "type": "string"
+          },
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "centre_latitude",
+            "type": "number"
+          },
+          {
+            "key": "centre_longitude",
+            "type": "number"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

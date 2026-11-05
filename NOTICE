@@ -1,0 +1,21 @@
+Gladys NASA integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It reads open data published by the U.S. National Aeronautics and Space
+Administration (NASA):
+  - the Near Earth Object Web Service (NeoWs) of api.nasa.gov, data of the
+    JPL Center for Near Earth Object Studies (CNEOS);
+  - the images of the Earth Polychromatic Imaging Camera (EPIC) on board the
+    NOAA DSCOVR spacecraft, at https://epic.gsfc.nasa.gov/;
+  - the Earth Observatory Natural Event Tracker (EONET) v3, at
+    https://eonet.gsfc.nasa.gov/, which aggregates other sources (GDACS,
+    IRWIN, JTWC, NATICE, Smithsonian GVP…).
+NASA content is generally not subject to copyright in the United States; the
+integration credits NASA as the source. This integration is not affiliated
+with nor endorsed by NASA, and uses neither its name as a brand nor its
+insignia ("meatball", "worm") or any other NASA emblem.
+
+The test fixtures under test/fixtures/nasa/ are answers of those services
+downloaded on 2026-11-05.

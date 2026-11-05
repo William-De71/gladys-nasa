@@ -1,0 +1,1372 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "NASA",
+  "description": {
+    "en": "Near-Earth asteroids, the Earth seen by EPIC and natural events near you, from NASA open data.",
+    "fr": "Astéroïdes proches, la Terre vue par EPIC et événements naturels autour de vous (NASA).",
+    "de": "Erdnahe Asteroiden, die Erde von EPIC gesehen und Naturereignisse in deiner Nähe (NASA).",
+    "es": "Asteroides cercanos, la Tierra vista por EPIC y eventos naturales cerca de usted (NASA)."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-nasa:0.1.0",
+  "gladys_version": ">=5.3.0",
+  "categories": ["environment", "leisure"],
+  "keywords": [
+    "asteroid",
+    "astéroïde",
+    "NeoWs",
+    "EPIC",
+    "DSCOVR",
+    "EONET",
+    "wildfire",
+    "volcano",
+    "near-Earth object",
+    "natural events"
+  ],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-nasa/main/cover.jpg",
+  "transports": ["cloud"],
+  "location": true,
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Open NASA data",
+        "fr": "Données ouvertes de la NASA",
+        "de": "Offene NASA-Daten",
+        "es": "Datos abiertos de la NASA"
+      },
+      "description": {
+        "en": "Three free NASA services, read over the Internet (cloud): NeoWs for the asteroids (JPL data), EPIC for the images of the whole Earth taken from DSCOVR, and EONET for the natural events. Only EONET receives an area around each located house of Gladys (a box of the radius below), never the exact position. NeoWs needs a key of api.nasa.gov: the shared DEMO_KEY works without any sign-up, a free personal key avoids sharing its quota. The integration reads the asteroids 4 times a day. Not affiliated with NASA.",
+        "fr": "Trois services gratuits de la NASA, lus par Internet (cloud) : NeoWs pour les astéroïdes (données du JPL), EPIC pour les images de la Terre entière prises depuis DSCOVR, et EONET pour les événements naturels. Seul EONET reçoit une zone autour de chaque maison localisée de Gladys (un carré du rayon ci-dessous), jamais la position exacte. NeoWs demande une clé d’api.nasa.gov : la clé partagée DEMO_KEY marche sans inscription, une clé personnelle gratuite évite de partager son quota. L’intégration lit les astéroïdes 4 fois par jour. Non affiliée à la NASA.",
+        "de": "Drei kostenlose NASA-Dienste, über das Internet gelesen (Cloud): NeoWs für die Asteroiden (JPL-Daten), EPIC für die Bilder der ganzen Erde von DSCOVR aus und EONET für die Naturereignisse. Nur EONET erhält ein Gebiet um jedes Zuhause von Gladys mit Standort (ein Quadrat mit dem Radius unten), nie die genaue Position. NeoWs braucht einen Schlüssel von api.nasa.gov: Der geteilte DEMO_KEY funktioniert ohne Anmeldung, ein kostenloser eigener Schlüssel vermeidet ein geteiltes Kontingent. Die Integration liest die Asteroiden 4-mal am Tag. Nicht mit der NASA verbunden.",
+        "es": "Tres servicios gratuitos de la NASA, leídos por Internet (nube): NeoWs para los asteroides (datos del JPL), EPIC para las imágenes de la Tierra entera tomadas desde DSCOVR y EONET para los eventos naturales. Solo EONET recibe una zona alrededor de cada vivienda ubicada de Gladys (un cuadrado del radio de abajo), nunca la posición exacta. NeoWs necesita una clave de api.nasa.gov: la clave compartida DEMO_KEY funciona sin registro, una clave personal gratuita evita compartir su cuota. La integración lee los asteroides 4 veces al día. No afiliada a la NASA."
+      },
+      "links": [
+        {
+          "url": "https://api.nasa.gov/",
+          "label": {
+            "en": "Get a free NASA API key",
+            "fr": "Obtenir une clé gratuite de la NASA",
+            "de": "Kostenlosen NASA-Schlüssel holen",
+            "es": "Obtener una clave gratuita de la NASA"
+          }
+        },
+        {
+          "url": "https://epic.gsfc.nasa.gov/",
+          "label": {
+            "en": "EPIC images",
+            "fr": "Images EPIC",
+            "de": "EPIC-Bilder",
+            "es": "Imágenes EPIC"
+          }
+        },
+        {
+          "url": "https://eonet.gsfc.nasa.gov/",
+          "label": {
+            "en": "EONET events",
+            "fr": "Événements EONET",
+            "de": "EONET-Ereignisse",
+            "es": "Eventos EONET"
+          }
+        }
+      ]
+    },
+    {
+      "key": "api_key",
+      "type": "secret",
+      "required": false,
+      "label": {
+        "en": "NASA API key (optional)",
+        "fr": "Clé d’API de la NASA (facultative)",
+        "de": "NASA-API-Schlüssel (optional)",
+        "es": "Clave de API de la NASA (opcional)"
+      },
+      "description": {
+        "en": "Empty: the shared DEMO_KEY (10 requests an hour per IP address). A free key of api.nasa.gov allows 1,000 an hour.",
+        "fr": "Vide : la clé partagée DEMO_KEY (10 requêtes par heure et par adresse IP). Une clé gratuite d’api.nasa.gov en permet 1 000.",
+        "de": "Leer: der geteilte DEMO_KEY (10 Anfragen pro Stunde und IP-Adresse). Ein kostenloser Schlüssel von api.nasa.gov erlaubt 1.000.",
+        "es": "Vacío: la clave compartida DEMO_KEY (10 peticiones por hora y dirección IP). Una clave gratuita de api.nasa.gov permite 1000."
+      },
+      "placeholder": {
+        "en": "DEMO_KEY",
+        "fr": "DEMO_KEY",
+        "de": "DEMO_KEY",
+        "es": "DEMO_KEY"
+      }
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "default": "auto",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Device names, scene texts and errors. Automatic: the language of the last widget shown.",
+        "fr": "Noms des appareils, textes et erreurs des scènes. Automatique : la langue du dernier widget affiché.",
+        "de": "Gerätenamen, Texte und Fehler der Szenen. Automatisch: die Sprache des zuletzt angezeigten Widgets.",
+        "es": "Nombres de los dispositivos, textos y errores de las escenas. Automático: el idioma del último widget mostrado."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ]
+    },
+    {
+      "key": "events",
+      "type": "section",
+      "label": {
+        "en": "Natural events",
+        "fr": "Événements naturels",
+        "de": "Naturereignisse",
+        "es": "Eventos naturales"
+      },
+      "description": {
+        "en": "EONET lists wildfires, storms, floods, volcanoes and other events from several sources (GDACS, IRWIN, JTWC…). Its coverage is uneven: very complete for the wildfires of the United States, partial elsewhere. It is not an official warning service: keep the alerts of your country.",
+        "fr": "EONET recense feux de forêt, tempêtes, inondations, volcans et autres événements à partir de plusieurs sources (GDACS, IRWIN, JTWC…). Sa couverture est inégale : très complète pour les feux des États-Unis, partielle ailleurs. Ce n’est pas un service d’alerte officiel : gardez les alertes de votre pays.",
+        "de": "EONET erfasst Waldbrände, Stürme, Überschwemmungen, Vulkane und andere Ereignisse aus mehreren Quellen (GDACS, IRWIN, JTWC…). Die Abdeckung ist ungleich: sehr vollständig für die Waldbrände der USA, lückenhaft anderswo. Es ist kein offizieller Warndienst: Behalte die Warnungen deines Landes.",
+        "es": "EONET recoge incendios forestales, tormentas, inundaciones, volcanes y otros eventos de varias fuentes (GDACS, IRWIN, JTWC…). Su cobertura es desigual: muy completa para los incendios de Estados Unidos, parcial en otros lugares. No es un servicio oficial de alertas: conserve las alertas de su país."
+      }
+    },
+    {
+      "key": "radius_km",
+      "type": "select",
+      "default": "500",
+      "label": {
+        "en": "Radius around each house",
+        "fr": "Rayon autour de chaque maison",
+        "de": "Radius um jedes Zuhause",
+        "es": "Radio alrededor de cada vivienda"
+      },
+      "options": [
+        {
+          "value": "100",
+          "label": {
+            "en": "100 km",
+            "fr": "100 km",
+            "de": "100 km",
+            "es": "100 km"
+          }
+        },
+        {
+          "value": "250",
+          "label": {
+            "en": "250 km",
+            "fr": "250 km",
+            "de": "250 km",
+            "es": "250 km"
+          }
+        },
+        {
+          "value": "500",
+          "label": {
+            "en": "500 km",
+            "fr": "500 km",
+            "de": "500 km",
+            "es": "500 km"
+          }
+        },
+        {
+          "value": "1000",
+          "label": {
+            "en": "1000 km",
+            "fr": "1000 km",
+            "de": "1000 km",
+            "es": "1000 km"
+          }
+        },
+        {
+          "value": "2000",
+          "label": {
+            "en": "2000 km",
+            "fr": "2000 km",
+            "de": "2000 km",
+            "es": "2000 km"
+          }
+        }
+      ]
+    },
+    {
+      "key": "event_days",
+      "type": "select",
+      "default": "14",
+      "label": {
+        "en": "Events of the last",
+        "fr": "Événements des derniers",
+        "de": "Ereignisse der letzten",
+        "es": "Eventos de los últimos"
+      },
+      "options": [
+        {
+          "value": "7",
+          "label": {
+            "en": "7 days",
+            "fr": "7 jours",
+            "de": "7 Tage",
+            "es": "7 días"
+          }
+        },
+        {
+          "value": "14",
+          "label": {
+            "en": "14 days",
+            "fr": "14 jours",
+            "de": "14 Tage",
+            "es": "14 días"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "30 days",
+            "fr": "30 jours",
+            "de": "30 Tage",
+            "es": "30 días"
+          }
+        }
+      ]
+    },
+    {
+      "key": "asteroids",
+      "type": "section",
+      "label": {
+        "en": "Asteroids",
+        "fr": "Astéroïdes",
+        "de": "Asteroiden",
+        "es": "Asteroides"
+      },
+      "description": {
+        "en": "A lunar distance is the distance from the Earth to the Moon, 384,400 km. Most approaches of a week stay beyond 5 lunar distances; a few a year pass inside the orbit of the Moon.",
+        "fr": "Une distance lunaire est la distance de la Terre à la Lune, 384 400 km. La plupart des passages d’une semaine restent au-delà de 5 distances lunaires ; quelques-uns par an passent à l’intérieur de l’orbite de la Lune.",
+        "de": "Ein Mondabstand ist die Entfernung von der Erde zum Mond, 384.400 km. Die meisten Vorbeiflüge einer Woche bleiben jenseits von 5 Mondabständen; einige pro Jahr kommen innerhalb der Mondbahn vorbei.",
+        "es": "Una distancia lunar es la distancia de la Tierra a la Luna, 384 400 km. La mayoría de los pasos de una semana quedan más allá de 5 distancias lunares; unos pocos al año pasan dentro de la órbita de la Luna."
+      }
+    },
+    {
+      "key": "lunar_threshold",
+      "type": "select",
+      "default": "5",
+      "label": {
+        "en": "Close approach under",
+        "fr": "Passage proche à moins de",
+        "de": "Naher Vorbeiflug unter",
+        "es": "Paso cercano a menos de"
+      },
+      "description": {
+        "en": "For the close approach trigger and the colours of the asteroids widget.",
+        "fr": "Pour le déclencheur de passage proche et les couleurs du widget des astéroïdes.",
+        "de": "Für den Auslöser „naher Vorbeiflug“ und die Farben des Asteroiden-Widgets.",
+        "es": "Para el desencadenador de paso cercano y los colores del widget de asteroides."
+      },
+      "options": [
+        {
+          "value": "1",
+          "label": {
+            "en": "1 lunar distance",
+            "fr": "1 distance lunaire",
+            "de": "1 Mondabstand",
+            "es": "1 distancia lunar"
+          }
+        },
+        {
+          "value": "2",
+          "label": {
+            "en": "2 lunar distances",
+            "fr": "2 distances lunaires",
+            "de": "2 Mondabstände",
+            "es": "2 distancias lunares"
+          }
+        },
+        {
+          "value": "5",
+          "label": {
+            "en": "5 lunar distances",
+            "fr": "5 distances lunaires",
+            "de": "5 Mondabstände",
+            "es": "5 distancias lunares"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "en": "10 lunar distances",
+            "fr": "10 distances lunaires",
+            "de": "10 Mondabstände",
+            "es": "10 distancias lunares"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "en": "20 lunar distances",
+            "fr": "20 distances lunaires",
+            "de": "20 Mondabstände",
+            "es": "20 distancias lunares"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "timeout_seconds": 90,
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "description": {
+        "en": "Reads the asteroids (unless read in the last 10 minutes), the EPIC images and the events near the located houses.",
+        "fr": "Lit les astéroïdes (sauf s’ils ont été lus il y a moins de 10 minutes), les images EPIC et les événements près des maisons localisées.",
+        "de": "Liest die Asteroiden (außer in den letzten 10 Minuten gelesen), die EPIC-Bilder und die Ereignisse nahe den Zuhause mit Standort.",
+        "es": "Lee los asteroides (salvo si se leyeron hace menos de 10 minutos), las imágenes EPIC y los eventos cerca de las viviendas ubicadas."
+      }
+    },
+    {
+      "key": "diagnostic",
+      "timeout_seconds": 10,
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes the state of the integration to its logs (no key, no coordinates), to attach to an issue.",
+        "fr": "Écrit l’état de l’intégration dans ses journaux (ni clé ni coordonnées), à joindre à un ticket.",
+        "de": "Schreibt den Zustand der Integration in ihre Protokolle (ohne Schlüssel und Koordinaten), zum Anhängen an ein Issue.",
+        "es": "Escribe el estado de la integración en sus registros (sin clave ni coordenadas), para adjuntar a una incidencia."
+      }
+    }
+  ],
+  "widgets": [
+    {
+      "key": "asteroids",
+      "icon": "crosshair",
+      "label": {
+        "en": "Near-Earth asteroids",
+        "fr": "Astéroïdes géocroiseurs",
+        "de": "Erdnahe Asteroiden",
+        "es": "Asteroides cercanos"
+      },
+      "description": {
+        "en": "The closest approach, the counts and the list of the next 7 days.",
+        "fr": "Le passage le plus proche, les compteurs et la liste des 7 prochains jours.",
+        "de": "Nächster Vorbeiflug, Zähler und Liste der nächsten 7 Tage.",
+        "es": "El paso más cercano, los contadores y la lista de los próximos 7 días."
+      },
+      "settings": [
+        {
+          "key": "sort",
+          "type": "select",
+          "default": "distance",
+          "label": {
+            "en": "Sort the list by",
+            "fr": "Trier la liste par",
+            "de": "Liste sortieren nach",
+            "es": "Ordenar la lista por"
+          },
+          "options": [
+            {
+              "value": "distance",
+              "label": {
+                "en": "Distance",
+                "fr": "Distance",
+                "de": "Abstand",
+                "es": "Distancia"
+              }
+            },
+            {
+              "value": "date",
+              "label": {
+                "en": "Date",
+                "fr": "Date",
+                "de": "Datum",
+                "es": "Fecha"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "earth",
+      "icon": "globe",
+      "label": {
+        "en": "Earth from space",
+        "fr": "La Terre vue de l’espace",
+        "de": "Die Erde aus dem All",
+        "es": "La Tierra desde el espacio"
+      },
+      "description": {
+        "en": "The latest EPIC image of the whole Earth, the one facing a house.",
+        "fr": "La dernière image EPIC de la Terre entière, celle face à une maison.",
+        "de": "Das neueste EPIC-Bild der ganzen Erde, mit Blick auf ein Zuhause.",
+        "es": "La última imagen EPIC de la Tierra entera, la que mira a una vivienda."
+      },
+      "settings": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Natural events device",
+            "fr": "Appareil Événements naturels",
+            "de": "Gerät „Naturereignisse“",
+            "es": "Dispositivo Eventos naturales"
+          },
+          "description": {
+            "en": "Its house is shown at the centre. Empty: the first located house.",
+            "fr": "Sa maison est montrée au centre. Vide : la première maison localisée.",
+            "de": "Sein Zuhause wird in der Mitte gezeigt. Leer: das erste Zuhause mit Standort.",
+            "es": "Su vivienda se muestra en el centro. Vacío: la primera vivienda ubicada."
+          }
+        }
+      ]
+    },
+    {
+      "key": "natural_events",
+      "icon": "alert-triangle",
+      "label": {
+        "en": "Natural events nearby",
+        "fr": "Événements naturels proches",
+        "de": "Naturereignisse in der Nähe",
+        "es": "Eventos naturales cercanos"
+      },
+      "description": {
+        "en": "The EONET events within the radius of a house, the nearest first.",
+        "fr": "Les événements EONET dans le rayon d’une maison, le plus proche d’abord.",
+        "de": "Die EONET-Ereignisse im Radius eines Zuhauses, das nächste zuerst.",
+        "es": "Los eventos EONET en el radio de una vivienda, el más cercano primero."
+      },
+      "settings": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Natural events device",
+            "fr": "Appareil Événements naturels",
+            "de": "Gerät „Naturereignisse“",
+            "es": "Dispositivo Eventos naturales"
+          },
+          "description": {
+            "en": "Empty: the first located house.",
+            "fr": "Vide : la première maison localisée.",
+            "de": "Leer: das erste Zuhause mit Standort.",
+            "es": "Vacío: la primera vivienda ubicada."
+          }
+        }
+      ]
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "asteroid_close_approach",
+      "label": {
+        "en": "NASA: close approach of an asteroid",
+        "fr": "NASA : passage proche d’un astéroïde",
+        "de": "NASA: naher Vorbeiflug eines Asteroiden",
+        "es": "NASA: paso cercano de un asteroide"
+      },
+      "description": {
+        "en": "An asteroid will pass closer than the threshold of the configuration in the next 7 days (once per approach).",
+        "fr": "Un astéroïde passera plus près que le seuil de la configuration dans les 7 prochains jours (une fois par passage).",
+        "de": "Ein Asteroid fliegt in den nächsten 7 Tagen näher als die Schwelle der Konfiguration vorbei (einmal pro Vorbeiflug).",
+        "es": "Un asteroide pasará más cerca que el umbral de la configuración en los próximos 7 días (una vez por paso)."
+      },
+      "fields": [],
+      "variables": [
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Asteroid",
+            "fr": "Astéroïde",
+            "de": "Asteroid",
+            "es": "Asteroide"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date of the approach",
+            "fr": "Date du passage",
+            "de": "Datum des Vorbeiflugs",
+            "es": "Fecha del paso"
+          }
+        },
+        {
+          "key": "distance_km",
+          "type": "number",
+          "label": {
+            "en": "Distance (km)",
+            "fr": "Distance (km)",
+            "de": "Abstand (km)",
+            "es": "Distancia (km)"
+          }
+        },
+        {
+          "key": "distance_lunar",
+          "type": "number",
+          "label": {
+            "en": "Distance (lunar distances)",
+            "fr": "Distance (distances lunaires)",
+            "de": "Abstand (Mondabstände)",
+            "es": "Distancia (distancias lunares)"
+          }
+        },
+        {
+          "key": "diameter_m",
+          "type": "string",
+          "label": {
+            "en": "Estimated diameter (m)",
+            "fr": "Diamètre estimé (m)",
+            "de": "Geschätzter Durchmesser (m)",
+            "es": "Diámetro estimado (m)"
+          }
+        },
+        {
+          "key": "velocity_kms",
+          "type": "number",
+          "label": {
+            "en": "Speed (km/s)",
+            "fr": "Vitesse (km/s)",
+            "de": "Geschwindigkeit (km/s)",
+            "es": "Velocidad (km/s)"
+          }
+        },
+        {
+          "key": "hazardous",
+          "type": "boolean",
+          "label": {
+            "en": "Potentially hazardous",
+            "fr": "Potentiellement dangereux",
+            "de": "Potenziell gefährlich",
+            "es": "Potencialmente peligroso"
+          }
+        },
+        {
+          "key": "sentry",
+          "type": "boolean",
+          "label": {
+            "en": "On the Sentry list",
+            "fr": "Sur la liste Sentry",
+            "de": "Auf der Sentry-Liste",
+            "es": "En la lista Sentry"
+          }
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "label": {
+            "en": "JPL page",
+            "fr": "Fiche du JPL",
+            "de": "JPL-Seite",
+            "es": "Ficha del JPL"
+          }
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "hazardous_asteroid",
+      "label": {
+        "en": "NASA: potentially hazardous asteroid",
+        "fr": "NASA : astéroïde potentiellement dangereux",
+        "de": "NASA: potenziell gefährlicher Asteroid",
+        "es": "NASA: asteroide potencialmente peligroso"
+      },
+      "description": {
+        "en": "A potentially hazardous asteroid (PHA) will pass within the next 7 days, whatever its distance (once per approach).",
+        "fr": "Un astéroïde potentiellement dangereux (PHA) passera dans les 7 prochains jours, quelle que soit sa distance (une fois par passage).",
+        "de": "Ein potenziell gefährlicher Asteroid (PHA) fliegt in den nächsten 7 Tagen vorbei, egal wie weit (einmal pro Vorbeiflug).",
+        "es": "Un asteroide potencialmente peligroso (PHA) pasará en los próximos 7 días, sea cual sea su distancia (una vez por paso)."
+      },
+      "fields": [],
+      "variables": [
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Asteroid",
+            "fr": "Astéroïde",
+            "de": "Asteroid",
+            "es": "Asteroide"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date of the approach",
+            "fr": "Date du passage",
+            "de": "Datum des Vorbeiflugs",
+            "es": "Fecha del paso"
+          }
+        },
+        {
+          "key": "distance_km",
+          "type": "number",
+          "label": {
+            "en": "Distance (km)",
+            "fr": "Distance (km)",
+            "de": "Abstand (km)",
+            "es": "Distancia (km)"
+          }
+        },
+        {
+          "key": "distance_lunar",
+          "type": "number",
+          "label": {
+            "en": "Distance (lunar distances)",
+            "fr": "Distance (distances lunaires)",
+            "de": "Abstand (Mondabstände)",
+            "es": "Distancia (distancias lunares)"
+          }
+        },
+        {
+          "key": "diameter_m",
+          "type": "string",
+          "label": {
+            "en": "Estimated diameter (m)",
+            "fr": "Diamètre estimé (m)",
+            "de": "Geschätzter Durchmesser (m)",
+            "es": "Diámetro estimado (m)"
+          }
+        },
+        {
+          "key": "velocity_kms",
+          "type": "number",
+          "label": {
+            "en": "Speed (km/s)",
+            "fr": "Vitesse (km/s)",
+            "de": "Geschwindigkeit (km/s)",
+            "es": "Velocidad (km/s)"
+          }
+        },
+        {
+          "key": "hazardous",
+          "type": "boolean",
+          "label": {
+            "en": "Potentially hazardous",
+            "fr": "Potentiellement dangereux",
+            "de": "Potenziell gefährlich",
+            "es": "Potencialmente peligroso"
+          }
+        },
+        {
+          "key": "sentry",
+          "type": "boolean",
+          "label": {
+            "en": "On the Sentry list",
+            "fr": "Sur la liste Sentry",
+            "de": "Auf der Sentry-Liste",
+            "es": "En la lista Sentry"
+          }
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "label": {
+            "en": "JPL page",
+            "fr": "Fiche du JPL",
+            "de": "JPL-Seite",
+            "es": "Ficha del JPL"
+          }
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    },
+    {
+      "key": "natural_event_nearby",
+      "label": {
+        "en": "NASA: natural event nearby",
+        "fr": "NASA : événement naturel proche",
+        "de": "NASA: Naturereignis in der Nähe",
+        "es": "NASA: evento natural cercano"
+      },
+      "description": {
+        "en": "A new EONET event within the radius of a house (wildfire, storm, flood, volcano…).",
+        "fr": "Un nouvel événement EONET dans le rayon d’une maison (feu, tempête, inondation, volcan…).",
+        "de": "Ein neues EONET-Ereignis im Radius eines Zuhauses (Brand, Sturm, Überschwemmung, Vulkan…).",
+        "es": "Un nuevo evento EONET en el radio de una vivienda (incendio, tormenta, inundación, volcán…)."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "House (Natural events device)",
+            "fr": "Maison (appareil Événements naturels)",
+            "de": "Zuhause (Gerät „Naturereignisse“)",
+            "es": "Vivienda (dispositivo Eventos naturales)"
+          },
+          "description": {
+            "en": "A Natural events device. Empty: every house.",
+            "fr": "Un appareil Événements naturels. Vide : toutes les maisons.",
+            "de": "Ein Gerät „Naturereignisse“. Leer: alle Zuhause.",
+            "es": "Un dispositivo Eventos naturales. Vacío: todas las viviendas."
+          }
+        },
+        {
+          "key": "category",
+          "type": "multi_select",
+          "required": false,
+          "label": {
+            "en": "Categories",
+            "fr": "Catégories",
+            "de": "Kategorien",
+            "es": "Categorías"
+          },
+          "description": {
+            "en": "Leave empty for every category.",
+            "fr": "Laissez vide pour toutes les catégories.",
+            "de": "Leer lassen für alle Kategorien.",
+            "es": "Déjelo vacío para todas las categorías."
+          },
+          "options": [
+            {
+              "value": "drought",
+              "label": {
+                "en": "Drought",
+                "fr": "Sécheresse",
+                "de": "Dürre",
+                "es": "Sequía"
+              }
+            },
+            {
+              "value": "dustHaze",
+              "label": {
+                "en": "Dust and haze",
+                "fr": "Poussière et brume",
+                "de": "Staub und Dunst",
+                "es": "Polvo y bruma"
+              }
+            },
+            {
+              "value": "earthquakes",
+              "label": {
+                "en": "Earthquakes",
+                "fr": "Séismes",
+                "de": "Erdbeben",
+                "es": "Terremotos"
+              }
+            },
+            {
+              "value": "floods",
+              "label": {
+                "en": "Floods",
+                "fr": "Inondations",
+                "de": "Überschwemmungen",
+                "es": "Inundaciones"
+              }
+            },
+            {
+              "value": "landslides",
+              "label": {
+                "en": "Landslides",
+                "fr": "Glissements de terrain",
+                "de": "Erdrutsche",
+                "es": "Deslizamientos"
+              }
+            },
+            {
+              "value": "manmade",
+              "label": {
+                "en": "Man-made",
+                "fr": "Origine humaine",
+                "de": "Menschengemacht",
+                "es": "De origen humano"
+              }
+            },
+            {
+              "value": "seaLakeIce",
+              "label": {
+                "en": "Sea and lake ice",
+                "fr": "Glace de mer et de lac",
+                "de": "Meer- und Seeeis",
+                "es": "Hielo marino y lacustre"
+              }
+            },
+            {
+              "value": "severeStorms",
+              "label": {
+                "en": "Severe storms",
+                "fr": "Tempêtes violentes",
+                "de": "Schwere Stürme",
+                "es": "Tormentas severas"
+              }
+            },
+            {
+              "value": "snow",
+              "label": {
+                "en": "Snow",
+                "fr": "Neige",
+                "de": "Schnee",
+                "es": "Nieve"
+              }
+            },
+            {
+              "value": "tempExtremes",
+              "label": {
+                "en": "Extreme temperatures",
+                "fr": "Températures extrêmes",
+                "de": "Extremtemperaturen",
+                "es": "Temperaturas extremas"
+              }
+            },
+            {
+              "value": "volcanoes",
+              "label": {
+                "en": "Volcanoes",
+                "fr": "Volcans",
+                "de": "Vulkane",
+                "es": "Volcanes"
+              }
+            },
+            {
+              "value": "waterColor",
+              "label": {
+                "en": "Water colour",
+                "fr": "Couleur de l’eau",
+                "de": "Wasserfärbung",
+                "es": "Color del agua"
+              }
+            },
+            {
+              "value": "wildfires",
+              "label": {
+                "en": "Wildfires",
+                "fr": "Feux de forêt",
+                "de": "Waldbrände",
+                "es": "Incendios forestales"
+              }
+            },
+            {
+              "value": "other",
+              "label": {
+                "en": "Other",
+                "fr": "Autre",
+                "de": "Sonstiges",
+                "es": "Otro"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "house",
+          "type": "string",
+          "label": {
+            "en": "House",
+            "fr": "Maison",
+            "de": "Zuhause",
+            "es": "Vivienda"
+          }
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "label": {
+            "en": "Event (NASA title, in English)",
+            "fr": "Événement (titre NASA, en anglais)",
+            "de": "Ereignis (NASA-Titel, auf Englisch)",
+            "es": "Evento (título de la NASA, en inglés)"
+          }
+        },
+        {
+          "key": "category",
+          "type": "string",
+          "label": {
+            "en": "Category (key)",
+            "fr": "Catégorie (clé)",
+            "de": "Kategorie (Schlüssel)",
+            "es": "Categoría (clave)"
+          }
+        },
+        {
+          "key": "category_label",
+          "type": "string",
+          "label": {
+            "en": "Category",
+            "fr": "Catégorie",
+            "de": "Kategorie",
+            "es": "Categoría"
+          }
+        },
+        {
+          "key": "distance_km",
+          "type": "number",
+          "label": {
+            "en": "Distance (km)",
+            "fr": "Distance (km)",
+            "de": "Abstand (km)",
+            "es": "Distancia (km)"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date",
+            "fr": "Date",
+            "de": "Datum",
+            "es": "Fecha"
+          }
+        },
+        {
+          "key": "magnitude",
+          "type": "number",
+          "label": {
+            "en": "Magnitude",
+            "fr": "Ampleur",
+            "de": "Ausmaß",
+            "es": "Magnitud"
+          }
+        },
+        {
+          "key": "magnitude_unit",
+          "type": "string",
+          "label": {
+            "en": "Unit of the magnitude",
+            "fr": "Unité de l’ampleur",
+            "de": "Einheit des Ausmaßes",
+            "es": "Unidad de la magnitud"
+          }
+        },
+        {
+          "key": "source",
+          "type": "string",
+          "label": {
+            "en": "Source",
+            "fr": "Source",
+            "de": "Quelle",
+            "es": "Fuente"
+          }
+        },
+        {
+          "key": "url",
+          "type": "string",
+          "label": {
+            "en": "Link of the source",
+            "fr": "Lien de la source",
+            "de": "Link der Quelle",
+            "es": "Enlace de la fuente"
+          }
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "label": {
+            "en": "Sentence ready to send",
+            "fr": "Phrase prête à envoyer",
+            "de": "Fertiger Satz zum Senden",
+            "es": "Frase lista para enviar"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "get_asteroids",
+      "timeout_seconds": 45,
+      "label": {
+        "en": "NASA: read the asteroids of the week",
+        "fr": "NASA : lire les astéroïdes de la semaine",
+        "de": "NASA: Asteroiden der Woche lesen",
+        "es": "NASA: leer los asteroides de la semana"
+      },
+      "description": {
+        "en": "Approaches of the next 7 days, potentially hazardous ones, the closest one, and a sentence.",
+        "fr": "Passages des 7 prochains jours, ceux potentiellement dangereux, le plus proche, et une phrase.",
+        "de": "Vorbeiflüge der nächsten 7 Tage, potenziell gefährliche, der nächste und ein Satz.",
+        "es": "Pasos de los próximos 7 días, los potencialmente peligrosos, el más cercano y una frase."
+      },
+      "fields": [],
+      "outputs": [
+        {
+          "key": "approaches",
+          "type": "number",
+          "label": {
+            "en": "Approaches in 7 days",
+            "fr": "Passages sur 7 jours",
+            "de": "Vorbeiflüge in 7 Tagen",
+            "es": "Pasos en 7 días"
+          }
+        },
+        {
+          "key": "hazardous",
+          "type": "number",
+          "label": {
+            "en": "Potentially hazardous",
+            "fr": "Potentiellement dangereux",
+            "de": "Potenziell gefährlich",
+            "es": "Potencialmente peligrosos"
+          }
+        },
+        {
+          "key": "closest_name",
+          "type": "string",
+          "label": {
+            "en": "Closest asteroid",
+            "fr": "Astéroïde le plus proche",
+            "de": "Nächster Asteroid",
+            "es": "Asteroide más cercano"
+          }
+        },
+        {
+          "key": "closest_date",
+          "type": "string",
+          "label": {
+            "en": "Date of its approach",
+            "fr": "Date de son passage",
+            "de": "Datum seines Vorbeiflugs",
+            "es": "Fecha de su paso"
+          }
+        },
+        {
+          "key": "closest_distance_km",
+          "type": "number",
+          "label": {
+            "en": "Its distance (km)",
+            "fr": "Sa distance (km)",
+            "de": "Sein Abstand (km)",
+            "es": "Su distancia (km)"
+          }
+        },
+        {
+          "key": "closest_distance_lunar",
+          "type": "number",
+          "label": {
+            "en": "Its distance (lunar distances)",
+            "fr": "Sa distance (distances lunaires)",
+            "de": "Sein Abstand (Mondabstände)",
+            "es": "Su distancia (distancias lunares)"
+          }
+        },
+        {
+          "key": "closest_diameter_m",
+          "type": "string",
+          "label": {
+            "en": "Its estimated diameter (m)",
+            "fr": "Son diamètre estimé (m)",
+            "de": "Sein geschätzter Durchmesser (m)",
+            "es": "Su diámetro estimado (m)"
+          }
+        },
+        {
+          "key": "closest_velocity_kms",
+          "type": "number",
+          "label": {
+            "en": "Its speed (km/s)",
+            "fr": "Sa vitesse (km/s)",
+            "de": "Seine Geschwindigkeit (km/s)",
+            "es": "Su velocidad (km/s)"
+          }
+        },
+        {
+          "key": "closest_hazardous",
+          "type": "boolean",
+          "label": {
+            "en": "It is potentially hazardous",
+            "fr": "Il est potentiellement dangereux",
+            "de": "Er ist potenziell gefährlich",
+            "es": "Es potencialmente peligroso"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary sentence",
+            "fr": "Phrase de résumé",
+            "de": "Zusammenfassung",
+            "es": "Frase de resumen"
+          }
+        }
+      ]
+    },
+    {
+      "key": "get_natural_events",
+      "timeout_seconds": 45,
+      "label": {
+        "en": "NASA: read the natural events nearby",
+        "fr": "NASA : lire les événements naturels proches",
+        "de": "NASA: Naturereignisse in der Nähe lesen",
+        "es": "NASA: leer los eventos naturales cercanos"
+      },
+      "description": {
+        "en": "Events within the radius of a house, the nearest one, and a sentence.",
+        "fr": "Événements dans le rayon d’une maison, le plus proche, et une phrase.",
+        "de": "Ereignisse im Radius eines Zuhauses, das nächste und ein Satz.",
+        "es": "Eventos en el radio de una vivienda, el más cercano y una frase."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "House (Natural events device)",
+            "fr": "Maison (appareil Événements naturels)",
+            "de": "Zuhause (Gerät „Naturereignisse“)",
+            "es": "Vivienda (dispositivo Eventos naturales)"
+          },
+          "description": {
+            "en": "Empty: the first located house.",
+            "fr": "Vide : la première maison localisée.",
+            "de": "Leer: das erste Zuhause mit Standort.",
+            "es": "Vacío: la primera vivienda ubicada."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "count",
+          "type": "number",
+          "label": {
+            "en": "Number of events",
+            "fr": "Nombre d’événements",
+            "de": "Anzahl der Ereignisse",
+            "es": "Número de eventos"
+          }
+        },
+        {
+          "key": "house",
+          "type": "string",
+          "label": {
+            "en": "House",
+            "fr": "Maison",
+            "de": "Zuhause",
+            "es": "Vivienda"
+          }
+        },
+        {
+          "key": "nearest_title",
+          "type": "string",
+          "label": {
+            "en": "Nearest event",
+            "fr": "Événement le plus proche",
+            "de": "Nächstes Ereignis",
+            "es": "Evento más cercano"
+          }
+        },
+        {
+          "key": "nearest_category",
+          "type": "string",
+          "label": {
+            "en": "Its category",
+            "fr": "Sa catégorie",
+            "de": "Seine Kategorie",
+            "es": "Su categoría"
+          }
+        },
+        {
+          "key": "nearest_distance_km",
+          "type": "number",
+          "label": {
+            "en": "Its distance (km)",
+            "fr": "Sa distance (km)",
+            "de": "Sein Abstand (km)",
+            "es": "Su distancia (km)"
+          }
+        },
+        {
+          "key": "nearest_date",
+          "type": "string",
+          "label": {
+            "en": "Its date",
+            "fr": "Sa date",
+            "de": "Sein Datum",
+            "es": "Su fecha"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary sentence",
+            "fr": "Phrase de résumé",
+            "de": "Zusammenfassung",
+            "es": "Frase de resumen"
+          }
+        }
+      ]
+    },
+    {
+      "key": "get_earth_image",
+      "timeout_seconds": 45,
+      "label": {
+        "en": "NASA: read the latest image of the Earth",
+        "fr": "NASA : lire la dernière image de la Terre",
+        "de": "NASA: neuestes Bild der Erde lesen",
+        "es": "NASA: leer la última imagen de la Tierra"
+      },
+      "description": {
+        "en": "The link of the latest EPIC image facing a house, its date and centre, and a sentence.",
+        "fr": "Le lien de la dernière image EPIC face à une maison, sa date et son centre, et une phrase.",
+        "de": "Der Link des neuesten EPIC-Bilds mit Blick auf ein Zuhause, Datum und Mitte und ein Satz.",
+        "es": "El enlace de la última imagen EPIC frente a una vivienda, su fecha y centro, y una frase."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "House (Natural events device)",
+            "fr": "Maison (appareil Événements naturels)",
+            "de": "Zuhause (Gerät „Naturereignisse“)",
+            "es": "Vivienda (dispositivo Eventos naturales)"
+          },
+          "description": {
+            "en": "Empty: the first located house, else the latest image.",
+            "fr": "Vide : la première maison localisée, sinon la dernière image.",
+            "de": "Leer: das erste Zuhause mit Standort, sonst das neueste Bild.",
+            "es": "Vacío: la primera vivienda ubicada, si no la última imagen."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "image_url",
+          "type": "string",
+          "label": {
+            "en": "Link of the image (JPEG)",
+            "fr": "Lien de l’image (JPEG)",
+            "de": "Link des Bilds (JPEG)",
+            "es": "Enlace de la imagen (JPEG)"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date of the image",
+            "fr": "Date de l’image",
+            "de": "Datum des Bilds",
+            "es": "Fecha de la imagen"
+          }
+        },
+        {
+          "key": "centre_latitude",
+          "type": "number",
+          "label": {
+            "en": "Latitude of the centre",
+            "fr": "Latitude du centre",
+            "de": "Breite der Mitte",
+            "es": "Latitud del centro"
+          }
+        },
+        {
+          "key": "centre_longitude",
+          "type": "number",
+          "label": {
+            "en": "Longitude of the centre",
+            "fr": "Longitude du centre",
+            "de": "Länge der Mitte",
+            "es": "Longitud del centro"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary sentence",
+            "fr": "Phrase de résumé",
+            "de": "Zusammenfassung",
+            "es": "Frase de resumen"
+          }
+        }
+      ]
+    }
+  ]
+}
